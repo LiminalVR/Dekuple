@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace Dekuple.Registry
 {
@@ -15,7 +16,7 @@ namespace Dekuple.Registry
         bool Resolve();
         bool HasInjector(Type type);
         bool HasInjector<T>();
-        void AddSubscriptionsInScene();
+        void AddSubscriptionsInScene(Scene scene);
     }
 
     /// <inheritdoc />

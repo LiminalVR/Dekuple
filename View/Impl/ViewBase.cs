@@ -5,6 +5,7 @@ using UnityEngine;
 
 using UniRx;
 using CoLib;
+using UnityEngine.SceneManagement;
 
 namespace Dekuple.View.Impl
 {
@@ -32,10 +33,13 @@ namespace Dekuple.View.Impl
         public GameObject GameObject => gameObject;
         public Transform Transform => gameObject.transform;
         public IModel Model => AgentBase?.BaseModel ?? _localModel;
+        public Scene Scene { get; set; }
+
 
         // lazy create because most views won't need a queue or audio source
         protected CommandQueue _Queue => _queue ?? (_queue = new CommandQueue());
         protected List<IDisposable> _Subscriptions { get; } = new List<IDisposable>();
+
         protected AudioSource _AudioSource
         {
             get
@@ -52,6 +56,7 @@ namespace Dekuple.View.Impl
         private CommandQueue _queue;
         private AudioSource _audioSource;
         private IModel _localModel;
+
 
         public virtual bool IsValid
         {
@@ -176,6 +181,7 @@ namespace Dekuple.View.Impl
         }
 
         private void OnDestroy() => Destroy();
+
 
         public virtual void Destroy()
         {

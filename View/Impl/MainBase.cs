@@ -52,12 +52,12 @@ namespace Dekuple.View.Impl
             Agents.Kernel.Step();
         }
 
-        protected void ResolveScene()
+        protected void ResolveScene(Scene scene)
         {
-            Views.InjectViewsInScene();
-            Models.AddSubscriptionsInScene();
-            Agents.AddSubscriptionsInScene();
-            Views.AddSubscriptionsInScene();
+            Views.InjectViewsInScene(scene);
+            Models.AddSubscriptionsInScene(scene);
+            Agents.AddSubscriptionsInScene(scene);
+            Views.AddSubscriptionsInScene(scene);
         }
 
         protected virtual void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)

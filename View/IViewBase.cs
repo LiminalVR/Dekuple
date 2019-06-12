@@ -14,6 +14,7 @@ namespace Dekuple.View
         : IEntity
         , IHasDestroyHandler<IViewBase>
         , IHasRegistry<IViewBase>
+        , IHasScene
     {
         IAgent AgentBase { get; set; }
         GameObject GameObject { get; }

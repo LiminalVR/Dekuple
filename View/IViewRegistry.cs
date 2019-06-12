@@ -45,6 +45,6 @@ namespace Dekuple.View
             where TIView : class, IViewBase;
 
         void InjectView(IViewBase view);
-        void InjectViewsInScene();
+        void InjectViewsInScene(Scene scene);
     }
 }

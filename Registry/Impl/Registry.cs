@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.Collections.Generic;
+using Dekuple.View;
 using UnityEngine.SceneManagement;
 
 namespace Dekuple.Registry
@@ -55,28 +56,29 @@ namespace Dekuple.Registry
             Id = Guid.NewGuid();
         }
 
-        public void AddSubscriptionsInScene()
+        public void AddSubscriptionsInScene(Scene scene)
         {
-            // Copy instances enumerable so that if it is modified the loop will not break.
-            var instances = Instances.ToArray();
-            foreach (var obj in instances)
+            var sceneInstances = Instances
+                .OfType<IHasScene>()
+                .Where(i => i.Scene == scene)
+                .Select(i => (TBase)i)
+                .ToArray(); // Copy instances enumerable so that if it is modified the loop will not break.
+
+            foreach (var obj in sceneInstances)
                 obj.AddSubscriptions();
         }
 
         public bool Has(TBase instance)
-        {
-            return Instances.Contains(instance);
-        }
+            => _instances.ContainsKey(instance.Id);
 
         public bool Has(Guid id)
-        {
-            return Instances.Any(m => m.Id == id);
-        }
+            => _instances.ContainsKey(id);
 
         public TBase Get(Guid id)
         {
             if (_instances.TryGetValue(id, out var model))
                 return model;
+
             Warn($"Failed to find targetModel with id {id}");
             return null;
         }
