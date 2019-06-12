@@ -67,10 +67,6 @@ namespace Dekuple.Agent
             return other.Owner.Value == Owner.Value;
         }
 
-        public virtual void Create()
-        {
-        }
-
         // DK TODO Move to Chess2
         //public virtual void StartGame()
         //{

@@ -17,7 +17,7 @@ namespace Dekuple
 #else
         public static bool DefaultShowTraceStack = false;
         public static bool DefaultShowTraceSource = true;
-        public static int DefaultLogVerbosity = 4;
+        public static int DefaultLogVerbosity = 10;
 #endif
     }
 }

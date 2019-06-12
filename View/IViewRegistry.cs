@@ -46,5 +46,6 @@ namespace Dekuple.View
 
         void InjectView(IViewBase view);
         void InjectViewsInScene(Scene scene);
+        void AddSubscriptionsInScene(Scene scene);
     }
 }

@@ -55,8 +55,6 @@ namespace Dekuple.View.Impl
         protected void ResolveScene(Scene scene)
         {
             Views.InjectViewsInScene(scene);
-            Models.AddSubscriptionsInScene(scene);
-            Agents.AddSubscriptionsInScene(scene);
             Views.AddSubscriptionsInScene(scene);
         }
 
@@ -65,7 +63,8 @@ namespace Dekuple.View.Impl
             IEnumerator LateSceneLoad(IGenerator self)
             {
                 yield return null;
-                ResolveScene();
+                Info($"Resolving scene: {scene.name}");
+                ResolveScene(scene);
             }
 
             var kernel = Agents.Kernel;

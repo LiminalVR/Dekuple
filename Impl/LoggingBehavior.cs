@@ -22,6 +22,7 @@ namespace Dekuple
             _log.LogSubject = this;
             _log.ShowStack = Parameters.DefaultShowTraceStack;
             _log.ShowSource = Parameters.DefaultShowTraceSource;
+            _log.Verbosity = Parameters.DefaultLogVerbosity;
         }
 
         public void Info(string fmt, params object[] args)

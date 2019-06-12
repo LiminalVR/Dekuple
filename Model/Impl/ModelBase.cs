@@ -72,21 +72,6 @@ namespace Dekuple.Model
             return ReferenceEquals(other.Owner.Value, Owner.Value);
         }
 
-        public virtual void Create()
-        {
-        }
-
-        public virtual void Begin()
-        {
-            Assert.IsFalse(_prepared);
-            if (_prepared)
-            {
-                Error($"{this} has already been prepared");
-                return;
-            }
-            _prepared = true;
-        }
-
         public virtual void AddSubscriptions()
         {
         }

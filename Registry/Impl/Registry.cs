@@ -56,18 +56,6 @@ namespace Dekuple.Registry
             Id = Guid.NewGuid();
         }
 
-        public void AddSubscriptionsInScene(Scene scene)
-        {
-            var sceneInstances = Instances
-                .OfType<IHasScene>()
-                .Where(i => i.Scene == scene)
-                .Select(i => (TBase)i)
-                .ToArray(); // Copy instances enumerable so that if it is modified the loop will not break.
-
-            foreach (var obj in sceneInstances)
-                obj.AddSubscriptions();
-        }
-
         public bool Has(TBase instance)
             => _instances.ContainsKey(instance.Id);
 
@@ -232,6 +220,7 @@ namespace Dekuple.Registry
 
             instance.OnDestroyed += ModelDestroyed;
             instance.Registry = this;
+            instance.AddSubscriptions();
             return instance;
         }
 

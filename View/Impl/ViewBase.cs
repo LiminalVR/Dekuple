@@ -29,12 +29,11 @@ namespace Dekuple.View.Impl
         public event Action<IViewBase> OnDestroyed;
         public IAgent AgentBase { get; set; }
         public IViewBase OwnerView { get; set; }
+        public Scene Scene { get; private set; }
         public IModel OwnerModel => Owner?.Value as IModel;
         public GameObject GameObject => gameObject;
         public Transform Transform => gameObject.transform;
         public IModel Model => AgentBase?.BaseModel ?? _localModel;
-        public Scene Scene { get; set; }
-
 
         // lazy create because most views won't need a queue or audio source
         protected CommandQueue _Queue => _queue ?? (_queue = new CommandQueue());
@@ -57,7 +56,6 @@ namespace Dekuple.View.Impl
         private AudioSource _audioSource;
         private IModel _localModel;
 
-
         public virtual bool IsValid
         {
             get
@@ -66,17 +64,9 @@ namespace Dekuple.View.Impl
                 if (Registry == null) return false;
                 if (ViewRegistry == null) return false;
                 if (GameObject == null) return false;
-                if (AgentBase == null) return false;
-                return AgentBase.IsValid && AgentBase.BaseModel.IsValid;
+                if (AgentBase != null && !AgentBase.IsValid) return false;
+                return Model == null || Model.IsValid;
             }
-        }
-
-        public bool SameOwner(IEntity other)
-        {
-            if (other == null)
-                return Owner.Value == null;
-
-            return other.Owner.Value == Owner.Value;
         }
 
         public void SetModel(IModel model)
@@ -129,6 +119,8 @@ namespace Dekuple.View.Impl
         /// </remarks>
         protected virtual void Create()
         {
+            Scene = GameObject.scene;
+            Verbose(10, $"> Creating: {GetType().Name}");
         }
 
         /// <remarks>
@@ -138,11 +130,13 @@ namespace Dekuple.View.Impl
         /// </remarks>
         protected virtual void Begin()
         {
+            Verbose(10, $"> Beginning: {GetType().Name}");
         }
 
         public virtual void AddSubscriptions()
         {
             BindTransformComponents();
+            Verbose(10, $"> Adding Subs: {GetType().Name}");
         }
 
         private void BindTransformComponents()
