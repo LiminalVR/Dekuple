@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Dekuple.View.Impl
 {
@@ -25,7 +27,13 @@ namespace Dekuple.View.Impl
     {
         public void InjectAllViews()
         {
-            foreach (var view in Object.FindObjectsOfType<ViewBase>())
+            var views = new List<ViewBase>();
+            foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                views.AddRange(root.GetComponentsInChildren<ViewBase>(true));
+            }
+
+            foreach (var view in views)
                 InjectView(view);
         }
 
@@ -58,6 +66,7 @@ namespace Dekuple.View.Impl
 
             if (agent != null)
                 Get<TInterface>().SetAgent(agent);
+
             return true;
         }
 

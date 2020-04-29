@@ -3,6 +3,8 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.Collections.Generic;
+using Dekuple.View.Impl;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Dekuple.Registry
@@ -57,10 +59,33 @@ namespace Dekuple.Registry
 
         public void AddSubscriptionsInScene()
         {
+            Debug.Log($"ADDING SCENE SUBS!!! {SceneManager.GetActiveScene()} | {Instances.Count()} instances");
             // Copy instances enumerable so that if it is modified the loop will not break.
             var instances = Instances.ToArray();
             foreach (var obj in instances)
+            {
+                Debug.Log($"\\\\\\ adding subs for --- {obj}");
                 obj.AddSubscriptions();
+            }
+
+            var views = new List<ViewBase>();
+            foreach (var root in SceneManager.GetActiveScene().GetRootGameObjects())
+            {
+                views.AddRange(root.GetComponentsInChildren<ViewBase>(true));
+            }
+
+            foreach (var view in views.ToList())
+            {
+                Debug.Log($"/// adding subs for --- {view}");
+                try
+                {
+                    view.AddSubscriptions();
+                }
+                catch (Exception e)
+                {
+                    Debug.Log($"Failed adding subs to {view}\n{e}");
+                }
+            }
         }
 
         public bool Has(TBase instance)
@@ -90,7 +115,7 @@ namespace Dekuple.Registry
             var ity = typeof(TInterface);
             if (_bindings.ContainsKey(ity))
             {
-                Warn($"Registry has already bound {ity} to {typeof(TImpl)}");
+                Debug.Log($"<color=red>Registry has already bound {ity} to {typeof(TImpl)}</color>");
                 return false;
             }
 

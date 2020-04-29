@@ -36,7 +36,7 @@ namespace Dekuple.Model
         private bool _destroyed;
         private readonly ReactiveProperty<IOwner> _owner;
         private bool _prepared;
-        private bool _addCalled;
+        private bool AddCalled;
 
         public virtual bool IsValid
         {
@@ -78,7 +78,7 @@ namespace Dekuple.Model
 
         public virtual bool AddSubscriptions()
         {
-            return !this.EarlyOut(ref _addCalled, $"{this} has already had AddSubscriptions called. Aborting.");
+            return !this.EarlyOut(ref AddCalled, $"{this} has already had AddSubscriptions called. Aborting.");
         }
 
         public virtual void Destroy()

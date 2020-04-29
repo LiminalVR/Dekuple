@@ -49,7 +49,7 @@ namespace Dekuple.View.Impl
         private bool _paused;
         private bool _createCalled;
         private bool _beginCalled;
-        private bool _addCalled;
+        public bool AddCalled;
         private bool _destroyed;
         private float _localTime;
         private CommandQueue _queue;
@@ -133,7 +133,7 @@ namespace Dekuple.View.Impl
 
         public virtual bool AddSubscriptions()
         {
-            if (this.EarlyOut(ref _addCalled, $"{this} has already had AddSubscriptions called. Aborting."))
+            if (this.EarlyOut(ref AddCalled, $"{this} has already had AddSubscriptions called. Aborting."))
                 return false;
 
             BindTransformComponents();

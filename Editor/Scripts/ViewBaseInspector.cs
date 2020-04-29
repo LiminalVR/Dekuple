@@ -38,6 +38,11 @@ public class ViewBaseInspector
     private BindingFlags Flags
         = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
 
+    public override bool RequiresConstantRepaint()
+    {
+        return true;
+    }
+
     public override void OnInspectorGUI()
     {
         if (Preferences.Prefs != null)

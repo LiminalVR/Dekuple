@@ -16,7 +16,7 @@
         , IAgent<TModel>
         where TModel : class, IModel
     {
-        private bool _addCalled;
+        public bool AddCalled;
         public event Action<IAgent> OnDestroyed;
         public IRegistry<IAgent> Registry { get; set; }
         public Guid Id { get; /*private*/ set; }
@@ -86,7 +86,7 @@
 
         public virtual bool AddSubscriptions()
         {
-            return !this.EarlyOut(ref _addCalled, $"{this} has already had AddSubscriptions called. Aborting.");
+            return !this.EarlyOut(ref AddCalled, $"{this} has already had AddSubscriptions called. Aborting.");
         }
 
         public virtual void Destroy()

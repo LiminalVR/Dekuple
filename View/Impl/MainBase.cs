@@ -151,6 +151,10 @@ namespace Dekuple.View.Impl
 
                 obj.SetAgent(agent);
                 obj.SetModel(model);
+
+                obj.AddSubscriptions();
+                agent.AddSubscriptions();
+                model.AddSubscriptions();
             }
             return objs;
         }
