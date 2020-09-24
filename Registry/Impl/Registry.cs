@@ -64,7 +64,6 @@ namespace Dekuple.Registry
             var instances = Instances.ToArray();
             foreach (var obj in instances)
             {
-                Debug.Log($"\\\\\\ adding subs for --- {obj}");
                 obj.AddSubscriptions();
             }
 
@@ -76,7 +75,6 @@ namespace Dekuple.Registry
 
             foreach (var view in views.ToList())
             {
-                Debug.Log($"/// adding subs for --- {view}");
                 try
                 {
                     view.AddSubscriptions();
